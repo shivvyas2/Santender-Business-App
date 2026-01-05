@@ -1,49 +1,33 @@
 import { IconSymbol } from '@/components/ui/icon-symbol';
 import React from 'react';
 import { ScrollView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function MoreScreen() {
+  const insets = useSafeAreaInsets();
+  
   return (
-    <SafeAreaView style={styles.container}>
-      <StatusBar barStyle="dark-content" backgroundColor="white" />
+    <View style={styles.container}>
+      <StatusBar barStyle="light-content" backgroundColor="#EC0000" translucent />
 
-      {/* Header */}
-      <View style={styles.header}>
-        <TouchableOpacity style={styles.headerButton}>
-          <IconSymbol name="plus" size={28} color="#0066CC" />
-        </TouchableOpacity>
-        <View style={styles.logoContainer}>
-          <View style={styles.chaseLogo}>
-            <View style={styles.logoInner} />
+      {/* Santander Red Header Banner */}
+      <View style={[styles.headerBanner, { paddingTop: insets.top + 8 }]}>
+        <View style={styles.headerContent}>
+          <View style={styles.santanderLogo}>
+            <View style={styles.logoFlame1} />
+            <View style={styles.logoFlame2} />
+            <View style={styles.logoFlame3} />
           </View>
+          <Text style={styles.santanderText}>Santander</Text>
+          <TouchableOpacity style={styles.menuButton}>
+            <IconSymbol name="line.3.horizontal" size={24} color="white" />
+          </TouchableOpacity>
         </View>
-        <TouchableOpacity style={styles.headerButton}>
-          <IconSymbol name="person.circle.fill" size={28} color="#0066CC" />
-        </TouchableOpacity>
+        <Text style={styles.lastLoginText}>Last Log in: Dec 7, 2025 at 11:16 AM (EST)</Text>
       </View>
 
-      {/* Unified scroll: search + quick actions + content to eliminate seams */}
+      {/* Unified scroll: content */}
       <ScrollView style={styles.scroll} contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
-        {/* Search */}
-        <View style={styles.searchRow}>
-          <View style={styles.searchBar}>
-            <Text style={styles.searchPlaceholder}>What are you looking for?</Text>
-          </View>
-          <TouchableOpacity style={styles.helpButton}>
-            <IconSymbol name="questionmark" size={20} color="white" />
-          </TouchableOpacity>
-        </View>
-
-        {/* Quick actions */}
-        <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.quickRow}>
-          <TouchableOpacity style={styles.actionButton}>
-            <IconSymbol name="plus" size={16} color="#0066CC" />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.actionButton}><Text style={styles.actionText}>Send | Zelle®</Text></TouchableOpacity>
-          <TouchableOpacity style={styles.actionButton}><Text style={styles.actionText}>Deposit checks</Text></TouchableOpacity>
-          <TouchableOpacity style={styles.actionButton}><Text style={styles.actionText}>Pay bills</Text></TouchableOpacity>
-        </ScrollView>
 
         {/* Cards */}
         {renderSection('Account Settings', [
@@ -81,10 +65,10 @@ export default function MoreScreen() {
         {renderSection('Legal & Privacy', [
           ['doc', 'Terms of service'],
           ['lock.shield', 'Privacy policy'],
-          ['info.circle', 'About Chase'],
+          ['info.circle', 'About Santander'],
         ])}
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 }
 
@@ -97,7 +81,7 @@ function renderSection(title: string, rows: [string, string][]) {
       <View style={styles.cardContent}>
         {rows.map(([icon, text], idx) => (
           <TouchableOpacity style={[styles.featureItem, idx === rows.length - 1 && { borderBottomWidth: 0 }]} key={text}>
-            <IconSymbol name={icon as any} size={24} color="#0066CC" />
+            <IconSymbol name={icon as any} size={24} color="#EC0000" />
             <Text style={styles.featureText}>{text}</Text>
             <IconSymbol name="chevron.right" size={16} color="#999999" />
           </TouchableOpacity>
@@ -108,43 +92,103 @@ function renderSection(title: string, rows: [string, string][]) {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: 'white' },
-  header: {
-    flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between',
-    paddingHorizontal: 20, paddingVertical: 16, backgroundColor: 'white',
+  container: { 
+    flex: 1, 
+    backgroundColor: 'white' 
   },
-  headerButton: { padding: 12, borderRadius: 8 },
-  logoContainer: { alignItems: 'center', justifyContent: 'center' },
-  chaseLogo: {
-    width: 44, height: 44, backgroundColor: '#0066CC', borderRadius: 6,
-    alignItems: 'center', justifyContent: 'center', shadowColor: '#000', shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1, shadowRadius: 3, elevation: 3,
+  // Santander Red Header Banner
+  headerBanner: {
+    backgroundColor: '#EC0000',
+    paddingBottom: 12,
+    paddingHorizontal: 16,
   },
-  logoInner: { width: 24, height: 24, backgroundColor: 'white', borderRadius: 2, transform: [{ rotate: '45deg' }] },
-
-  scroll: { flex: 1 },
-  scrollContent: { paddingHorizontal: 20, paddingBottom: 24, paddingTop: 0 },
-
-  searchRow: { flexDirection: 'row', alignItems: 'center', backgroundColor: 'white', marginBottom: 12 },
-  searchBar: {
-    flex: 1, backgroundColor: '#F8F9FA', borderRadius: 12, paddingHorizontal: 20, paddingVertical: 16, marginRight: 16,
-    shadowColor: '#000', shadowOffset: { width: 0, height: 1 }, shadowOpacity: 0.05, shadowRadius: 2, elevation: 1,
+  headerContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 8,
   },
-  searchPlaceholder: { color: '#8E8E93', fontSize: 17, fontWeight: '400' },
-  helpButton: { padding: 12, backgroundColor: '#0066CC', borderRadius: 20, width: 40, height: 40, alignItems: 'center', justifyContent: 'center' },
-
-  quickRow: { paddingRight: 20, marginBottom: 8 },
-  actionButton: {
-    backgroundColor: 'white', borderRadius: 6, paddingHorizontal: 8, paddingVertical: 6, marginRight: 8, minWidth: 60, height: 32,
-    alignItems: 'center', justifyContent: 'center', shadowColor: '#000', shadowOffset: { width: 0, height: 1 }, shadowOpacity: 0.05, shadowRadius: 1, elevation: 1,
+  santanderLogo: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
   },
-  actionText: { fontSize: 11, fontWeight: '500', color: '#1C1C1E', textAlign: 'center' },
-
-  featureCard: { backgroundColor: 'white', borderRadius: 12, marginBottom: 16, overflow: 'hidden', borderWidth: 1, borderColor: '#E5E5E5' },
-  cardHeader: { backgroundColor: '#0066CC', paddingHorizontal: 16, paddingVertical: 12 },
-  cardHeaderText: { color: 'white', fontSize: 16, fontWeight: '600' },
-  cardContent: { padding: 16 },
-  featureItem: { flexDirection: 'row', alignItems: 'center', paddingVertical: 12, borderBottomWidth: 1, borderBottomColor: '#E5E5E5' },
-  featureText: { flex: 1, fontSize: 16, fontWeight: '500', color: '#000000', marginLeft: 16 },
+  logoFlame1: {
+    width: 8,
+    height: 20,
+    backgroundColor: 'white',
+    borderRadius: 4,
+  },
+  logoFlame2: {
+    width: 10,
+    height: 24,
+    backgroundColor: 'white',
+    borderRadius: 5,
+  },
+  logoFlame3: {
+    width: 8,
+    height: 20,
+    backgroundColor: 'white',
+    borderRadius: 4,
+  },
+  santanderText: {
+    color: 'white',
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginLeft: 12,
+    letterSpacing: 0.5,
+  },
+  menuButton: {
+    padding: 8,
+  },
+  lastLoginText: {
+    color: 'white',
+    fontSize: 12,
+    opacity: 0.9,
+    textAlign: 'center',
+  },
+  scroll: { 
+    flex: 1 
+  },
+  scrollContent: { 
+    paddingHorizontal: 20, 
+    paddingBottom: 24, 
+    paddingTop: 20 
+  },
+  featureCard: { 
+    backgroundColor: 'white', 
+    borderRadius: 12, 
+    marginBottom: 16, 
+    overflow: 'hidden', 
+    borderWidth: 1, 
+    borderColor: '#E5E5E5' 
+  },
+  cardHeader: { 
+    backgroundColor: '#EC0000', 
+    paddingHorizontal: 16, 
+    paddingVertical: 12 
+  },
+  cardHeaderText: { 
+    color: 'white', 
+    fontSize: 16, 
+    fontWeight: '600' 
+  },
+  cardContent: { 
+    padding: 16 
+  },
+  featureItem: { 
+    flexDirection: 'row', 
+    alignItems: 'center', 
+    paddingVertical: 12, 
+    borderBottomWidth: 1, 
+    borderBottomColor: '#E5E5E5' 
+  },
+  featureText: { 
+    flex: 1, 
+    fontSize: 16, 
+    fontWeight: '500', 
+    color: '#000000', 
+    marginLeft: 16 
+  },
 });
 

@@ -1,12 +1,13 @@
 import { IconSymbol } from '@/components/ui/icon-symbol';
 import React, { useState } from 'react';
 import { ScrollView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Path, Svg } from 'react-native-svg';
 
 export default function CreditJourneyScreen() {
   const [activeTab, setActiveTab] = useState('credit');
   const [activeSubTab, setActiveSubTab] = useState('overview');
+  const insets = useSafeAreaInsets();
 
   const CreditScoreGauge = () => (
     <View style={styles.gaugeContainer}>
@@ -23,7 +24,7 @@ export default function CreditJourneyScreen() {
         {/* Track arc (unfilled outline visible under progress) */}
         <Path
           d="M 80 180 A 120 120 0 0 1 320 180"
-          stroke="#0D1B69"
+          stroke="white"
           strokeWidth="12"
           fill="none"
           strokeLinecap="round"
@@ -31,22 +32,22 @@ export default function CreditJourneyScreen() {
         {/* Progress arc (filled portion) */}
         <Path
           d="M 80 180 A 120 120 0 0 1 320 180"
-          stroke="#FF6B35"
+          stroke="white"
           strokeWidth="12"
           fill="none"
           strokeDasharray="377"
-          strokeDashoffset="250"
+          strokeDashoffset="47"
           strokeLinecap="round"
         />
         {/* Unfilled outline is preserved by the track arc above. */}
       </Svg>
       
       <View style={styles.scoreInfo}>
-        <Text style={styles.scoreCategory}>Poor</Text>
-        <Text style={styles.scoreValue}>603</Text>
+        <Text style={styles.scoreCategory}>Good</Text>
+        <Text style={styles.scoreValue}>745</Text>
         <View style={styles.scoreChange}>
-          <IconSymbol name="arrow.down" size={20} color="#FF6B35" />
-          <Text style={styles.scoreChangeText}>9 points</Text>
+          <IconSymbol name="arrow.up" size={20} color="white" />
+          <Text style={styles.scoreChangeText}>12 points</Text>
         </View>
       </View>
       
@@ -60,16 +61,16 @@ export default function CreditJourneyScreen() {
   );
 
   return (
-    <SafeAreaView style={styles.container}>
-      <StatusBar barStyle="light-content" backgroundColor="#1A237E" />
+    <View style={styles.container}>
+      <StatusBar barStyle="light-content" backgroundColor="#EC0000" translucent />
       
       {/* Header */}
-      <View style={styles.header}>
+      <View style={[styles.header, { paddingTop: insets.top }]}>
         <TouchableOpacity style={styles.backButton}>
           <IconSymbol name="chevron.left" size={24} color="white" />
         </TouchableOpacity>
         
-        <Text style={styles.headerTitle}>Chase Credit Journey</Text>
+        <Text style={styles.headerTitle}>Credit Journey</Text>
         
         <View style={styles.headerRight}>
           <TouchableOpacity style={styles.notificationButton}>
@@ -156,7 +157,7 @@ export default function CreditJourneyScreen() {
                 <View style={styles.sectionHeader}>
                   <Text style={styles.sectionTitle}>Why your score changed</Text>
                   <TouchableOpacity>
-                    <IconSymbol name="questionmark.circle" size={16} color="#0066CC" />
+                    <IconSymbol name="questionmark.circle" size={16} color="#EC0000" />
                   </TouchableOpacity>
                 </View>
                 
@@ -166,7 +167,7 @@ export default function CreditJourneyScreen() {
                       Credit usage increased on your revolving accounts opened in the last year
                     </Text>
                     <View style={styles.changeImpact}>
-                      <IconSymbol name="arrow.down" size={14} color="#FF6B35" />
+                      <IconSymbol name="arrow.down" size={14} color="#EC0000" />
                       <Text style={styles.changePoints}>4 point</Text>
                     </View>
                   </View>
@@ -176,7 +177,7 @@ export default function CreditJourneyScreen() {
                       Card account balances increased
                     </Text>
                     <View style={styles.changeImpact}>
-                      <IconSymbol name="arrow.down" size={14} color="#FF6B35" />
+                      <IconSymbol name="arrow.down" size={14} color="#EC0000" />
                       <Text style={styles.changePoints}>2 point</Text>
                     </View>
                   </View>
@@ -186,9 +187,147 @@ export default function CreditJourneyScreen() {
                       Credit usage increased on your accounts
                     </Text>
                     <View style={styles.changeImpact}>
-                      <IconSymbol name="arrow.down" size={14} color="#FF6B35" />
+                      <IconSymbol name="arrow.down" size={14} color="#EC0000" />
                       <Text style={styles.changePoints}>1 point</Text>
                     </View>
+                  </View>
+                </View>
+                
+                <View style={styles.businessAnalysisSection}>
+                  <View style={styles.sectionHeader}>
+                    <Text style={styles.sectionTitle}>In-Depth Analysis of Business Credit Report</Text>
+                  </View>
+                  
+                  <View style={styles.analysisCard}>
+                    <View style={styles.analysisHeader}>
+                      <IconSymbol name="building.2" size={20} color="#EC0000" />
+                      <Text style={styles.analysisCardTitle}>Business Credit Overview</Text>
+                    </View>
+                    <Text style={styles.analysisDescription}>
+                      Your business credit profile shows a solid foundation with consistent payment history across multiple trade lines.
+                    </Text>
+                  </View>
+
+                  <View style={styles.analysisCard}>
+                    <View style={styles.analysisHeader}>
+                      <IconSymbol name="chart.bar" size={20} color="#EC0000" />
+                      <Text style={styles.analysisCardTitle}>Payment Trends</Text>
+                    </View>
+                    <View style={styles.analysisRow}>
+                      <Text style={styles.analysisLabel}>On-time payments</Text>
+                      <Text style={styles.analysisValue}>95%</Text>
+                    </View>
+                    <View style={styles.analysisRow}>
+                      <Text style={styles.analysisLabel}>Late payments (30+ days)</Text>
+                      <Text style={styles.analysisValue}>3</Text>
+                    </View>
+                    <View style={styles.analysisRow}>
+                      <Text style={styles.analysisLabel}>Total trade lines</Text>
+                      <Text style={styles.analysisValue}>12</Text>
+                    </View>
+                  </View>
+
+                  <View style={styles.analysisCard}>
+                    <View style={styles.analysisHeader}>
+                      <IconSymbol name="creditcard" size={20} color="#EC0000" />
+                      <Text style={styles.analysisCardTitle}>Credit Utilization</Text>
+                    </View>
+                    <Text style={styles.analysisDescription}>
+                      Your current credit utilization is at 42%, which is within a healthy range. Consider keeping it below 30% for optimal scoring.
+                    </Text>
+                    <View style={styles.utilizationBar}>
+                      <View style={[styles.utilizationFill, { width: '42%' }]} />
+                    </View>
+                    <View style={styles.utilizationLabels}>
+                      <Text style={styles.utilizationLabel}>0%</Text>
+                      <Text style={styles.utilizationLabel}>42%</Text>
+                      <Text style={styles.utilizationLabel}>100%</Text>
+                    </View>
+                  </View>
+
+                  <View style={styles.analysisCard}>
+                    <View style={styles.analysisHeader}>
+                      <IconSymbol name="clock" size={20} color="#EC0000" />
+                      <Text style={styles.analysisCardTitle}>Credit History Length</Text>
+                    </View>
+                    <Text style={styles.analysisDescription}>
+                      Your oldest account has been active for 8 years, demonstrating strong business stability and creditworthiness.
+                    </Text>
+                  </View>
+
+                  <View style={styles.analysisCard}>
+                    <View style={styles.analysisHeader}>
+                      <IconSymbol name="list.bullet" size={20} color="#EC0000" />
+                      <Text style={styles.analysisCardTitle}>Tradelines</Text>
+                    </View>
+                    <View style={styles.analysisRow}>
+                      <Text style={styles.analysisLabel}>Open accounts</Text>
+                      <Text style={styles.analysisValue}>12</Text>
+                    </View>
+                    <View style={styles.analysisRow}>
+                      <Text style={styles.analysisLabel}>Closed accounts</Text>
+                      <Text style={styles.analysisValue}>5</Text>
+                    </View>
+                    <View style={styles.analysisRow}>
+                      <Text style={styles.analysisLabel}>Revolving accounts</Text>
+                      <Text style={styles.analysisValue}>8</Text>
+                    </View>
+                    <View style={[styles.analysisRow, { borderBottomWidth: 0 }]}>
+                      <Text style={styles.analysisLabel}>Installment accounts</Text>
+                      <Text style={styles.analysisValue}>4</Text>
+                    </View>
+                  </View>
+
+                  <View style={styles.analysisCard}>
+                    <View style={styles.analysisHeader}>
+                      <IconSymbol name="doc.text" size={20} color="#EC0000" />
+                      <Text style={styles.analysisCardTitle}>Obligations</Text>
+                    </View>
+                    <View style={styles.analysisRow}>
+                      <Text style={styles.analysisLabel}>Total obligations</Text>
+                      <Text style={styles.analysisValue}>$245,680</Text>
+                    </View>
+                    <View style={styles.analysisRow}>
+                      <Text style={styles.analysisLabel}>Monthly payments</Text>
+                      <Text style={styles.analysisValue}>$8,450</Text>
+                    </View>
+                    <View style={[styles.analysisRow, { borderBottomWidth: 0 }]}>
+                      <Text style={styles.analysisLabel}>Available credit</Text>
+                      <Text style={styles.analysisValue}>$154,320</Text>
+                    </View>
+                  </View>
+
+                  <View style={styles.analysisCard}>
+                    <View style={styles.analysisHeader}>
+                      <IconSymbol name="dollarsign.circle" size={20} color="#EC0000" />
+                      <Text style={styles.analysisCardTitle}>Debt Summary</Text>
+                    </View>
+                    <View style={styles.analysisRow}>
+                      <Text style={styles.analysisLabel}>Total debt</Text>
+                      <Text style={styles.analysisValue}>$103,250</Text>
+                    </View>
+                    <View style={styles.analysisRow}>
+                      <Text style={styles.analysisLabel}>Revolving debt</Text>
+                      <Text style={styles.analysisValue}>$42,680</Text>
+                    </View>
+                    <View style={styles.analysisRow}>
+                      <Text style={styles.analysisLabel}>Installment debt</Text>
+                      <Text style={styles.analysisValue}>$60,570</Text>
+                    </View>
+                    <View style={[styles.analysisRow, { borderBottomWidth: 0 }]}>
+                      <Text style={styles.analysisLabel}>Debt-to-income ratio</Text>
+                      <Text style={styles.analysisValue}>28%</Text>
+                    </View>
+                  </View>
+
+                  <View style={styles.analysisCard}>
+                    <View style={styles.analysisHeader}>
+                      <IconSymbol name="exclamationmark.triangle" size={20} color="#EC0000" />
+                      <Text style={styles.analysisCardTitle}>Public Records & Collections</Text>
+                    </View>
+                    <Text style={styles.analysisDescription}>
+                      No public records or collections found on your credit report. This is a positive indicator for your creditworthiness.
+                    </Text>
                   </View>
                 </View>
                 
@@ -213,7 +352,7 @@ export default function CreditJourneyScreen() {
                 <View style={styles.factorsList}>
                   <TouchableOpacity style={styles.factorItem}>
                     <View style={styles.factorIcon}>
-                      <IconSymbol name="calendar" size={20} color="#0066CC" />
+                      <IconSymbol name="calendar" size={20} color="#EC0000" />
                     </View>
                     <View style={styles.factorContent}>
                       <Text style={styles.factorName}>Payment history</Text>
@@ -224,7 +363,7 @@ export default function CreditJourneyScreen() {
                   
                   <TouchableOpacity style={styles.factorItem}>
                     <View style={styles.factorIcon}>
-                      <IconSymbol name="folder" size={20} color="#0066CC" />
+                      <IconSymbol name="folder" size={20} color="#EC0000" />
                     </View>
                     <View style={styles.factorContent}>
                       <Text style={styles.factorName}>Credit history</Text>
@@ -235,7 +374,7 @@ export default function CreditJourneyScreen() {
                   
                   <TouchableOpacity style={styles.factorItem}>
                     <View style={styles.factorIcon}>
-                      <IconSymbol name="creditcard" size={20} color="#0066CC" />
+                      <IconSymbol name="creditcard" size={20} color="#EC0000" />
                     </View>
                     <View style={styles.factorContent}>
                       <Text style={styles.factorName}>Credit usage</Text>
@@ -246,7 +385,7 @@ export default function CreditJourneyScreen() {
                   
                   <TouchableOpacity style={styles.factorItem}>
                     <View style={styles.factorIcon}>
-                      <IconSymbol name="doc.text" size={20} color="#0066CC" />
+                      <IconSymbol name="doc.text" size={20} color="#EC0000" />
                     </View>
                     <View style={styles.factorContent}>
                       <Text style={styles.factorName}>Total balances</Text>
@@ -257,7 +396,7 @@ export default function CreditJourneyScreen() {
                   
                   <TouchableOpacity style={styles.factorItem}>
                     <View style={styles.factorIcon}>
-                      <IconSymbol name="doc.text" size={20} color="#0066CC" />
+                      <IconSymbol name="doc.text" size={20} color="#EC0000" />
                     </View>
                     <View style={styles.factorContent}>
                       <Text style={styles.factorName}>Credit checks</Text>
@@ -403,7 +542,7 @@ export default function CreditJourneyScreen() {
 
           <View style={styles.offerCard}>
             <View style={styles.offerHeader}>
-              <IconSymbol name="gift.fill" size={20} color="#0066CC" />
+              <IconSymbol name="gift.fill" size={20} color="#EC0000" />
               <Text style={styles.offerType}>Special Offer</Text>
             </View>
             <Text style={styles.offerTitle}>Balance Transfer</Text>
@@ -416,14 +555,14 @@ export default function CreditJourneyScreen() {
           </View>
         </ScrollView>
       )}
-    </SafeAreaView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#1A237E',
+    backgroundColor: '#EC0000',
   },
   header: {
     flexDirection: 'row',
@@ -452,7 +591,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 4,
     right: 4,
-    backgroundColor: '#0066CC',
+    backgroundColor: '#EC0000',
     borderRadius: 10,
     width: 20,
     height: 20,
@@ -483,7 +622,7 @@ const styles = StyleSheet.create({
   activeTab: {
     backgroundColor: 'white',
     borderWidth: 1,
-    borderColor: '#0066CC',
+    borderColor: '#EC0000',
   },
   tabText: {
     color: 'white',
@@ -491,7 +630,7 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
   activeTabText: {
-    color: '#0066CC',
+    color: '#EC0000',
   },
   quickRow: {
     flexDirection: 'row',
@@ -521,7 +660,7 @@ const styles = StyleSheet.create({
   },
   quickBadge: {
     marginLeft: 8,
-    backgroundColor: '#0066CC',
+    backgroundColor: '#EC0000',
     borderRadius: 10,
     width: 20,
     height: 20,
@@ -537,7 +676,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: -6,
     right: 2,
-    backgroundColor: '#0066CC',
+    backgroundColor: '#EC0000',
     borderRadius: 8,
     width: 16,
     height: 16,
@@ -570,7 +709,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   scoreHistory: {
-    color: '#66B3FF',
+    color: 'white',
     fontSize: 14,
   },
   gaugeContainer: {
@@ -600,7 +739,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   scoreChangeText: {
-    color: '#FF6B35',
+    color: 'white',
     fontSize: 18,
     marginLeft: 4,
     fontWeight: '600',
@@ -637,7 +776,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   activeBreakdownTab: {
-    backgroundColor: '#0066CC',
+    backgroundColor: '#EC0000',
   },
   breakdownTabText: {
     fontSize: 14,
@@ -685,7 +824,7 @@ const styles = StyleSheet.create({
   changePoints: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#FF6B35',
+    color: '#EC0000',
     marginLeft: 4,
   },
   errorMessage: {
@@ -702,6 +841,72 @@ const styles = StyleSheet.create({
     color: '#FF4444',
     marginLeft: 8,
     flex: 1,
+  },
+  businessAnalysisSection: {
+    marginTop: 24,
+    marginBottom: 16,
+  },
+  analysisCard: {
+    backgroundColor: '#F8F9FA',
+    borderRadius: 12,
+    padding: 16,
+    marginBottom: 12,
+    borderWidth: 1,
+    borderColor: '#E5E5E5',
+  },
+  analysisHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 12,
+  },
+  analysisCardTitle: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#000000',
+    marginLeft: 12,
+  },
+  analysisDescription: {
+    fontSize: 14,
+    color: '#666666',
+    lineHeight: 20,
+  },
+  analysisRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: 8,
+    borderBottomWidth: 1,
+    borderBottomColor: '#E5E5E5',
+  },
+  analysisLabel: {
+    fontSize: 14,
+    color: '#333333',
+  },
+  analysisValue: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#000000',
+  },
+  utilizationBar: {
+    height: 8,
+    backgroundColor: '#E5E5E5',
+    borderRadius: 4,
+    marginTop: 12,
+    marginBottom: 8,
+    overflow: 'hidden',
+  },
+  utilizationFill: {
+    height: '100%',
+    backgroundColor: '#EC0000',
+    borderRadius: 4,
+  },
+  utilizationLabels: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  utilizationLabel: {
+    fontSize: 12,
+    color: '#666666',
   },
   breakdownContent: {
     flex: 1,
@@ -750,7 +955,7 @@ const styles = StyleSheet.create({
   },
   factorImpact: {
     fontSize: 14,
-    color: '#0066CC',
+    color: '#EC0000',
   },
   alertsSection: {
     flex: 1,
@@ -932,7 +1137,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   offerButton: {
-    backgroundColor: '#0066CC',
+    backgroundColor: '#EC0000',
     paddingVertical: 12,
     paddingHorizontal: 24,
     borderRadius: 8,

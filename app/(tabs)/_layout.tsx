@@ -12,7 +12,7 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: '#0066CC',
+        tabBarActiveTintColor: '#EC0000',
         tabBarInactiveTintColor: '#666666',
         headerShown: false,
         tabBarButton: HapticTab,
@@ -36,6 +36,10 @@ export default function TabLayout() {
           fontWeight: '500',
           marginTop: 4,
         },
+        tabBarIndicatorStyle: {
+          backgroundColor: '#EC0000',
+          height: 2,
+        },
       }}>
       <Tabs.Screen
         name="index"
@@ -43,7 +47,7 @@ export default function TabLayout() {
           title: 'Accounts',
           tabBarIcon: ({ color, focused }) => (
             <View style={styles.iconContainer}>
-              <IconSymbol size={24} name="creditcard" color={focused ? '#0066CC' : color} />
+              <IconSymbol size={24} name="creditcard" color={focused ? '#EC0000' : color} />
             </View>
           ),
         }}
@@ -51,12 +55,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="pay-transfer"
         options={{
-          title: 'Pay & transfer',
-          tabBarIcon: ({ color, focused }) => (
-            <View style={styles.iconContainer}>
-              <IconSymbol size={24} name="dollarsign.circle" color={focused ? '#0066CC' : color} />
-            </View>
-          ),
+          href: null, // Hide from bottom tab bar
         }}
       />
       <Tabs.Screen
@@ -65,7 +64,7 @@ export default function TabLayout() {
           title: 'Credit Journey',
           tabBarIcon: ({ color, focused }) => (
             <View style={styles.iconContainer}>
-              <IconSymbol size={24} name="chart.bar" color={focused ? '#0066CC' : color} />
+              <IconSymbol size={24} name="chart.bar" color={focused ? '#EC0000' : color} />
             </View>
           ),
         }}
@@ -73,12 +72,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="more"
         options={{
-          title: 'More',
-          tabBarIcon: ({ color, focused }) => (
-            <View style={styles.iconContainer}>
-              <IconSymbol size={24} name="line.3.horizontal" color={focused ? '#0066CC' : color} />
-            </View>
-          ),
+          href: null, // Hide from bottom tab bar
         }}
       />
     </Tabs>
