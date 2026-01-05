@@ -1,15 +1,20 @@
 {
   "expo": {
-    "name": "Chase_UI",
-    "slug": "Chase_UI",
+    "name": "Santander UI",
+    "slug": "santander-business-app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "chaseui",
+    "scheme": "santanderbusiness",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.santander.business",
+      "buildNumber": "1",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -43,7 +48,12 @@
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "81f521f4-1fc8-4439-a8de-fb43568757c7"
+      }
     }
   }
 }
-
